@@ -124,6 +124,7 @@ export default {
   &:active
     color #23232b
     background-color #fff
+    border-color #fff
     border-bottom-color #23232b
 .is-disabled
   color #bababa

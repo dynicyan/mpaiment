@@ -40,7 +40,11 @@ export default {
         },
         {
           name: '暂无数据',
-          link: '/mnodata'
+          link: '/mpnodata'
+        },
+        {
+          name: '视频上传',
+          link: '/mpupfile'
         }]
     }
   }
