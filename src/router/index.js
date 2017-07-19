@@ -57,7 +57,7 @@ export default new Router({
           component: r => require.ensure([], () => r(require('../packages/mpaiPage/Index')), 'mpaiment-button')
         },
         {
-          path: '/mnodata',
+          path: '/mpnodata',
           name: 'mnodata',
           component: r => require.ensure([], () => r(require('../packages/mpaiNodata/Index')), 'mpaiment-button')
         }

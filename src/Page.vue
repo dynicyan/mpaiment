@@ -54,6 +54,12 @@ export default {
 h1, h2
   font-weight normal
 .hello
+  padding 24px
+  margin 50px auto 0
+  width 980px
+  border 1px solid #e1e1e1
+  min-height 600px
+  background #fff
   h1
     margin 10px 0
     font-size 20px

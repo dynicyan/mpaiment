@@ -1,16 +1,24 @@
 <template lang="pug">
-  .hello
-    h1 {{ msg }}
-    input(type="check")
+  mp-check(:items="fruitlists" name='fruits' :model='1')
 </template>
-
 <script>
+import mpCheck from './CheckBox'
 export default {
-  name: 'hello',
+  name: 'mpCheckboxShow',
+  components: {
+    mpCheck
+  },
   data () {
     return {
-      msg: 'mPaiMent',
-      textLists: {}
+      fruitlists: [
+        {name: 'apple', value: 1},
+        {name: 'banna', value: 2},
+        {name: 'orange', value: 3},
+        {name: 'xigua', value: 4},
+        {name: 'chengzi', value: 5},
+        {name: 'putao', value: 6},
+        {name: 'lizi', value: 7}
+      ]
     }
   }
 }
