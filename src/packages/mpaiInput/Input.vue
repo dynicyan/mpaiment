@@ -1,13 +1,14 @@
 <template lang="pug">
 	div(:class="[type === 'textarea' ? 'mp-textarea' : 'mp-input', size ? 'mp-input--' + size : '', {'is-labeled': labeled, 'is-disabled': disabled, 'is-circle': circled, 'is-valid': valided, 'mp-input-group': $slots.before || $slots.after, 'mp-input-before': $slots.before, 'mp-input-after': $slots.after}]")
 		template(v-if="type !== 'textarea'")
-			label(v-if="$slots.before && labeled" class='mp-before--label')
+			label(v-if="$slots.before && showlabeled" class='mp-before--label')
 				slot(name='before')
 				i(class='icon icon-close' @click='closeLabel')
 			span(:class="[{'is-top': isTop}]" v-if='$slots.before && !labeled' class='mp-input-group_before')
 				slot(name='before')
+				em.error-msg(v-if='errorShow') {{errorMsg}}
 			i(:class="['icon-' + icon, onIconClick ? 'is-clickable' : '']" v-if='icon' class='icon' @click="handleIconClick" ref='input')
-			input(:autocomplete="autoComplete" @keyup.enter="handleIconClick" class='mp-inner--input' v-bind="$props" @focus='handleFocus')
+			input(:class="[{'error-vaild': errorShow}]" v-model='currentValue' :autocomplete="autoComplete" @keyup.enter="handleIconClick" class='mp-inner--input' v-bind="$props" @focus='handleFocus' @blur='handleBlur')
 			span(v-if='$slots.after' class='mp-input-group_after' @click="handleIconClick")
 				slot(name='after')
 		textarea(
@@ -48,8 +49,14 @@ export default {
     disabled: Boolean,
     circled: Boolean,
     labeled: Boolean,
+    showlabeled: Boolean,
     isTop: Boolean,
+    errorShow: Boolean,
     valided: Boolean,
+    errorMsg: {
+      type: String,
+      defalut: ''
+    },
     defalutText: {
       type: String,
       defalut: '请输入关键词'
@@ -61,10 +68,13 @@ export default {
       if (this.onIconClick) {
         this.onIconClick(evt)
       }
-      this.$emit('click', evt)
+      this.$emit('click', [evt, this.currentValue])
     },
     handleFocus (event) {
       this.$emit('focus', event)
+    },
+    handleBlur (evt) {
+      this.$emit('blur', [evt, this.currentValue])
     },
     closeLabel (evt) {
       this.$emit('closeClick', evt)
@@ -101,11 +111,14 @@ export default {
 			left 50%
 			transform translate(-50%,-50%)
 	.mp-input-group_before
+		display inline-block
 		margin-right 12px
 		font-size 13px
+		line-height 20px
+		width 340px
 	.is-top
 		display block
-		margin-bottom 8px
+		margin-bottom 8px		
 .mp-inner--textarea
 .mp-inner--input
 	padding 8px 12px
@@ -153,6 +166,11 @@ export default {
 			left 50%
 			transform translate(-50%,-50%)
 .is-valid
+	.error-msg
+		display inline-block
+		font-weight normal
+		float right
+		color #ff7b4d
 	.mp-inner--input
 		color #ff7b4d
 		text-shadow 0px 0px 0px #23232b
@@ -167,6 +185,11 @@ export default {
 		&::-webkit-input-placeholder
 			 text-shadow none
 			 -webkit-text-fill-color initial
+	.error-vaild
+		border-color #ff7b4d
+		color #ff7b4d
+		text-shadow 0px 0px 0px #23232b
+		-webkit-text-fill-color transparent
 .is-disabled
 	.mp-inner--textarea
 	.mp-inner--input
