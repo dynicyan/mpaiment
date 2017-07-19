@@ -1,47 +1,20 @@
 <template lang="pug">
-<<<<<<< HEAD
-  .mp-cheboxRender
-    label(class="mp-checkbox" v-for="item, index in items")
-=======
   label(class="mp-checkbox")
     span(class="mp-checkbox__input" :class="{'is-disabled': disabled, 'is-checked': checked, 'is-allChecked': allChecked, 'is-focus': focus}")
       span(class="mp-checkbox--inner")
         i(class="icon icon-check" v-if="checked")
->>>>>>> 76bb982a3dc7dc778f7485255b50ec71cee1ee83
       input(
         class="mp-input--checkbox"
         :value="label"
         type="checkbox"
-<<<<<<< HEAD
-        v-model="model"
+        v-model="checked"
         @focus="focus = true"
         @blur="focus = false"
         :name="name"
-        :disabled="isDisabled")
-      span {{item.name}}
-</template>
-<script>
-export default {
-  name: 'mpCheck',
-  props: {
-    items: {
-      type: Array,
-      default: []
-    },
-    name: '',
-    model: [String, Number],
-    label: [String, Number],
-    isDisabled: Boolean
-=======
-        :disabled='disabled'
-        @focus="focus = true"
-        @blur="focus = false"
-        @change="handleChange"
-        v-model='checked'
-        :name="name")
-    span(class="mp-checkbox_label" v-if="$slots.default || label")
+        :disabled="disabled")
+    span(class='mp-checkbox_labelgit ' v-if="$slots.default || label")
       slot
-      template(v-if="!$slots.default") {{label}}
+      template(v-if="label") {{label}}
 </template>
 <script>
 export default {
@@ -63,13 +36,10 @@ export default {
     handleChange (evt) {
       this.$emit('change', evt)
     }
->>>>>>> 76bb982a3dc7dc778f7485255b50ec71cee1ee83
   }
 }
 </script>
 <style lang="stylus">
-<<<<<<< HEAD
-=======
 .mp-checkbox
   position relative
   cursor pointer
@@ -142,5 +112,4 @@ export default {
   .mp-checkbox_label
     font-size 13px
     padding-left 9px
->>>>>>> 76bb982a3dc7dc778f7485255b50ec71cee1ee83
 </style>
