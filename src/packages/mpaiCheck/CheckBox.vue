@@ -1,41 +1,115 @@
 <template lang="pug">
   label(class="mp-checkbox")
-    span(class="mp-checkbox__input" :class="{'is-disabled': disabled, 'is-checked': checked, 'is-allChecked': allChecked, 'is-focus': focus}")
+    span(class="mp-checkbox__input" :class="{'is-disabled': disabled, 'is-checked': isChecked, 'is-allChecked': allChecked, 'is-focus': focus}")
       span(class="mp-checkbox--inner")
-        i(class="icon icon-check" v-if="checked")
+        i(class="icon icon-check" v-if="isChecked")
       input(
+        v-if='trueLabel || falseLabel'
         class="mp-input--checkbox"
-        :value="label"
         type="checkbox"
-        v-model="checked"
+        :name="name"
+        :disabled="disabled"
+        :true-value="trueLabel"
+        :false-value="falseLabel"
+        v-model="model"
+        @change="handleChange"
+        @focus="focus = true"
+        @blur="focus = false")
+      input(v-else
+        class="mp-input--checkbox"
+        type="checkbox"
+        v-model="model"
+        :value = "label"
+        :name="name"
+        :disabled="disabled"
         @focus="focus = true"
         @blur="focus = false"
-        :name="name"
-        :disabled="disabled")
-    span(class='mp-checkbox_labelgit ' v-if="$slots.default || label")
+        @change="handleChange")
+    span(class='mp-checkbox_label ' v-if="$slots.default || label")
       slot
-      template(v-if="label") {{label}}
+      template(v-if="!$slots.default") {{label}}
 </template>
 <script>
+import Brocast from '../../mixins/brocast'
 export default {
   name: 'mpCheckbox',
-  componentName: 'ElCheckbox',
+  mixins: [Brocast],
+  componentName: 'mpCheckbox',
   data () {
     return {
+      selfModel: false,
       focus: false
     }
   },
+  computed: {
+    model: {
+      get () {
+        return this.isGroup ? this.store : this.value !== undefined ? this.value : this.selfModel
+      },
+      set (val) {
+        if (this.isGroup) {
+          this.dispatch('mpCheckboxGroup', 'input', [val])
+        } else {
+          this.$emit('input', val)
+          this.selfModel = val
+        }
+      }
+    },
+    isChecked () {
+      if ({}.toString.call(this.model) === '[object Boolean]') {
+        return this.model
+      } else if (Array.isArray(this.model)) {
+        return this.model.indexOf(this.label) > -1
+      } else if (this.model !== null && this.model !== undefined) {
+        return this.model === this.trueLabel
+      }
+    },
+    isGroup () {
+      let parent = this.$parent
+      while (parent) {
+        if (parent.$options.componentName !== 'mpCheckboxGroup') {
+          parent = parent.$parent
+        } else {
+          this._checkboxGroup = parent
+          return true
+        }
+      }
+      return false
+    },
+    store () {
+      return this._checkboxGroup ? this._checkboxGroup.value : this.value
+    }
+  },
   props: {
-    name: '',
-    label: [String, Number],
+    value: {},
+    label: {},
     disabled: Boolean,
     checked: Boolean,
-    allChecked: Boolean
+    allChecked: Boolean,
+    name: String,
+    trueLabel: [String, Number],
+    falseLabel: [String, Number]
   },
   methods: {
+    addToStore () {
+      if (Array.isArray(this.model) && this.model.indexOf(this.label) === -1) {
+        this.model.push(this.label)
+      } else {
+        this.model = this.trueLabel || true
+      }
+    },
     handleChange (evt) {
+      console.log(evt)
       this.$emit('change', evt)
+      if (this.isGroup) {
+        this.$nextTick(_ => {
+          this.dispatch('mpCheckboxGroup', 'change', [this._checkboxGroup.value])
+        })
+      }
     }
+  },
+  created () {
+    this.checked && this.addToStore()
   }
 }
 </script>

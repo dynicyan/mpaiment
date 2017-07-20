@@ -2,9 +2,11 @@
   .showCheck
     h1 {{msg}}
     p.checkdesc
-      mp-check(:checked="checked") 单个checkbox
+      mp-check(v-model="isChecked") 单个checkbox
+      span 选中的值为：{{isChecked}}
     p.checkdesc
       mp-check(label="labeCheckbox")
+      span 选中的值为：{{labeCheckbox}}
     p.checkdesc
       mp-check(label="disableCheckbox" :disabled='true')
 </template>
@@ -18,7 +20,8 @@ export default {
   data () {
     return {
       msg: 'mpaiment的checkBox展示',
-      checked: true,
+      isChecked: true,
+      labeCheckbox: '标签选择',
       fruitlists: [
         {name: 'apple', value: 1},
         {name: 'banna', value: 2},
