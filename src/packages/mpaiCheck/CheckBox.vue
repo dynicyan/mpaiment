@@ -1,6 +1,6 @@
 <template lang="pug">
   label(class="mp-checkbox")
-    span(class="mp-checkbox__input" :class="{'is-disabled': disabled, 'is-checked': isChecked, 'is-allChecked': allChecked, 'is-focus': focus}")
+    span(class="mp-checkbox__input" :class="{'is-disabled': disabled, 'is-checked': isChecked, 'is-allChecked': AllChecked, 'is-focus': focus}")
       span(class="mp-checkbox--inner")
         i(class="icon icon-check" v-if="isChecked")
       input(
@@ -85,7 +85,7 @@ export default {
     label: {},
     disabled: Boolean,
     checked: Boolean,
-    allChecked: Boolean,
+    AllChecked: Boolean,
     name: String,
     trueLabel: [String, Number],
     falseLabel: [String, Number]
@@ -99,7 +99,6 @@ export default {
       }
     },
     handleChange (evt) {
-      console.log(evt)
       this.$emit('change', evt)
       if (this.isGroup) {
         this.$nextTick(_ => {
