@@ -8,7 +8,17 @@
 				slot(name='before')
 				em.error-msg(v-if='errorShow') {{errorMsg}}
 			i(:class="['icon-' + icon, onIconClick ? 'is-clickable' : '']" v-if='icon' class='icon' @click="handleIconClick" ref='input')
-			input(:class="[{'error-vaild': errorShow}]" v-model='currentValue' :autocomplete="autoComplete" @keyup.enter="handleIconClick" class='mp-inner--input' v-bind="$props" @focus='handleFocus' @blur='handleBlur')
+			input(
+			:class="[{'error-vaild': errorShow}]"
+			:value='currentValue'
+			:autocomplete="autoComplete" 
+			@keyup.enter="handleIconClick" 
+			class='mp-inner--input' 
+			v-bind="$props"
+			ref="Input"
+			@focus='handleFocus'
+			@input='handleInput'
+			@blur='handleBlur')
 			span(v-if='$slots.after' class='mp-input-group_after' @click="handleIconClick")
 				slot(name='after')
 		textarea(
@@ -17,6 +27,10 @@
 			v-bind='$props'
 			ref='textarea'
 			@focus='handleFocus')
+		ul.mp-history.clearfix(v-show="isShowHistory")
+			li(v-for="history, index in histories")
+				span(@click="selectFunc(history)") {{history}}
+				i.icon.icon-close(@click="subFunc(index)")
 </template>
 <script>
 export default {
@@ -53,6 +67,12 @@ export default {
     isTop: Boolean,
     errorShow: Boolean,
     valided: Boolean,
+    validateEvent: {
+      type: Boolean,
+      default: true
+    },
+    isShowHistory: Boolean,
+    histories: Array,
     errorMsg: {
       type: String,
       defalut: ''
@@ -63,6 +83,13 @@ export default {
     },
     onIconClick: Function
   },
+  watch: {
+    'value' (val, oldValue) {
+      this.setCurrentValue(val)
+    }
+  },
+  created () {
+  },
   methods: {
     handleIconClick (evt) {
       if (this.onIconClick) {
@@ -70,14 +97,36 @@ export default {
       }
       this.$emit('click', [evt, this.currentValue])
     },
+    handleInput (event) {
+      const value = event.target.value
+      this.$emit('input', value)
+      this.setCurrentValue(value)
+      this.$emit('change', value)
+    },
     handleFocus (event) {
       this.$emit('focus', event)
     },
     handleBlur (evt) {
       this.$emit('blur', [evt, this.currentValue])
+      // if (this.validateEvent) {
+      //   this.dispatch('MpFormItem', 'Mp.form.blur', [this.currentValue])
+      // }
     },
     closeLabel (evt) {
       this.$emit('closeClick', evt)
+    },
+    setCurrentValue (value) {
+      if (value === this.currentValue) return
+      this.currentValue = value
+      // if (this.validateEvent) {
+      //   this.dispatch('MpFormItem', 'Mp.form.change', [value])
+      // }
+    },
+    selectFunc (history) {
+      this.$emit('select', history)
+    },
+    subFunc (index) {
+      this.$emit('sub', index)
     }
   }
 }
@@ -85,8 +134,8 @@ export default {
 <style lang="stylus">
 .mp-input
 	margin 10px 0
-	border-radius 2px
 	color #23232b
+	position relative
 	.icon
 	.mp-input-group_after
 		position absolute
@@ -118,9 +167,53 @@ export default {
 		width 340px
 	.is-top
 		display block
-		margin-bottom 8px		
+		margin-bottom 8px
+	.mp-history
+		position absolute
+		top 40px
+		width 326px
+		left 0
+		right 0
+		margin 0 auto
+		box-shadow 0 2px 4px 0 rgba(35, 35, 43, 0.12)
+		border 1px solid #e1e1e1
+		z-index 999
+		background-color #fff
+		li
+			position relative
+			width 326px
+			height 40px
+			margin 0
+			float left
+			text-align left
+			&:hover
+				background-color #ededed
+				.icon
+					display block
+			span
+				display inline-block
+				cursor default
+				overflow hidden
+				padding-left 10px
+				width 280px
+				line-height 40px
+				height 40px
+				text-overflow ellipsis
+				white-space nowrap
+			.icon
+				display none
+				font-size 12px
+				text-align center
+				border-radius 10px
+				width 20px
+				height 20px
+				top 10px
+				right 10px
 .mp-inner--textarea
 .mp-inner--input
+	-webkit-appearance none
+	mmp-inner--inputoz-appearance none
+	appearance none
 	padding 8px 12px
 	height 20px
 	width 302px
@@ -130,6 +223,9 @@ export default {
 	color #ffd600
 	text-shadow 0px 0px 0px #23232b
 	-webkit-text-fill-color transparent
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button 
+		-webkit-appearance none
 	&:hover
 		border-color #bababa
 	&:focus
@@ -221,6 +317,13 @@ export default {
 		font-size 14px
 		border 0 none
 		flex 1
+	.mp-history
+		width 597px
+		top 45px
+		li
+			width 597px
+			span
+				width 555px
 	.mp-before--label
 		padding 4px 12px
 		height 20px

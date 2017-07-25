@@ -118,6 +118,7 @@ export default {
   cursor pointer
   display inline-block
   white-space nowrap
+  margin-right 20px
   &:hover
     .mp-checkbox__input
       .mp-checkbox--inner

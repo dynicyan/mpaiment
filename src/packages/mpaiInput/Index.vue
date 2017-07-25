@@ -3,7 +3,21 @@
     h1 {{ msg }}
     .type-btn
       p input框含标签
-      mp-input(type='input' :labeled='isLabeled' :showlabeled='isShowLabel' icon='search' placeholder='图标标签搜索框' @closeClick='deleteLabel')
+      mp-input(
+        type='input'
+        ref='labHis'
+        :labeled='isLabeled'
+        :showlabeled='isShowLabel'
+        v-model='value1'
+        icon='search'
+        placeholder='图标标签搜索框'
+        @focus = 'focusFun'
+        @closeClick='deleteLabel'
+        @click='search'
+        :histories='localHistory'
+        :isShowHistory='showHistory'
+        @select='selectHistory'
+        @sub='substraction')
         template(slot='before') 带标签
       mp-input(type='input' :labeled='true' :showlabeled='true' placeholder='标签按钮搜索框' @click='search')
         template(slot='before') 带标签
@@ -45,25 +59,44 @@ export default {
       isLabeled: true,
       isShowLabel: true,
       isErrored: false,
-      errorMessage: ''
+      errorMessage: '',
+      value1: '',
+      showHistory: false,
+      localHistory: [],
+      historyItems: []
     }
   },
+  created () {
+    this.localHistory = localStorage.getItem('History1') ? localStorage.getItem('History1').split(',').slice(0, 10) : []
+    this.historyItems = this.localHistory
+  },
   methods: {
-    search (data) {
-      console.log(data)
-      if (data[1] === '' || data[1] === null || data[1] === undefined) {
+    search () {
+      if (this.value1 === '' || this.value1 === null || this.value1 === undefined) {
         this.isErrored = true
         this.errorMessage = '输入字段不能为空'
         return
       }
       this.isErrored = false
+      this.showHistory = false
+      console.log(this.value1)
+      if (this.value1 !== undefined || this.value1 !== null || this.value1 !== '') {
+        if (this.historyItems.indexOf(this.value1) < 0) {
+          this.historyItems.push(this.value1)
+        }
+        let length = this.historyItems.length
+        if (length > 10) {
+          this.historyItems.splice(0, 1)
+        }
+      }
+      localStorage.setItem('History1', this.historyItems)
     },
     focusFun (data) {
       this.isErrored = false
+      this.showHistory = this.localHistory.length > 0
     },
     deleteLabel (data) {
       this.isShowLabel = false
-      console.log(data)
     },
     validFun (data) {
       console.log(data)
@@ -73,21 +106,37 @@ export default {
         return
       }
       this.isErrored = false
+    },
+    selectHistory (value) {
+      this.value1 = value
+      this.showHistory = false
+    },
+    substraction (index) {
+      this.localHistory.splice(index, 1)
+      this.showHistory = this.localHistory.length > 0
+      localStorage.setItem('History1', this.localHistory)
     }
+  },
+  mounted () {
+    document.addEventListener('click', (e) => {
+      if (this.$refs.labHis) {
+        if (!this.$refs.labHis.$el.contains(e.target)) this.showHistory = false
+      }
+    })
   }
 }
 </script>
 <style lang="stylus">
 .hel
   padding-bottom 50px
-  overflow hidden
+  // overflow hidden
   width 600px
   margin 0 auto
 .type-btn
   float left
   width 100%
   text-align left
-  overflow hidden
+  // overflow hidden
   margin-bottom 10px
   .border
     padding 5px
