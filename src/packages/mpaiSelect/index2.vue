@@ -9,10 +9,10 @@
       mp-select(type="primary" :options='options' clearable @change='change')
     .showList
       p radio单选按钮选择器
-      mp-select(type="radio" :options='options' @change='change')
+      mp-select(type="radio" :options='options' clearable @change='change')
     .showList
       p 多选选择器
-      mp-select(type="multiple" :options='options' @change='change')
+      mp-select(type="multiple" :options='options' clearable @change='change')
     .showList
       p 多选可输入选择器
       mp-select(type="multiple" :options='options' editable @change='change')
@@ -21,7 +21,7 @@
       mp-select(type="multiple" :options='options' editable @change='change')
 </template>
 <script>
-  import mpSelect from './select'
+  import mpSelect from './select2'
   // import Clickoutside from '../../utils/clickoutside.js'
   export default {
     components: {

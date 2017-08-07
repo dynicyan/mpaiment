@@ -6,7 +6,7 @@
           li(v-for="(item,index) in selectArr")
             | {{item}}
             i.icon.icon-roundclose-fill(@click="removeOption(index)")
-        input(v-bind:placeholder='placeaments' @click.stop="handleClick" @keyup.enter="addEdit" v-model="selectedVal" :readonly='!editable')
+        input(v-bind:placeholder='placements' @click.stop="handleClick" @keyup.enter="addEdit" v-model="selectedVal" :readonly='!editable')
       i(class="icon icon-close" v-if="clearable && type !== 'multiple' && selectedVal !== ''" @click='removeVal()')
       i(class="icon icon-dropDown" :class="{'is-reverse':!showOptions}")
       div(class='showBox' v-if="type !=='multiple'")
@@ -31,7 +31,7 @@
       },
       clearable: {
         type: Boolean,
-        default: true
+        default: false
       },
       editable: {
         type: Boolean,
