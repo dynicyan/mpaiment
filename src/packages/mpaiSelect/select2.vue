@@ -7,12 +7,13 @@
             | {{item}}
             i.icon.icon-roundclose-fill(@click="removeOption(index)")
         input(v-bind:placeholder='placements' @click.stop="handleClick" @keyup.enter="addEdit" v-model="selectedVal" :readonly='!editable')
-      i(class="icon icon-close" v-if="clearable && type !== 'multiple' && selectedVal !== ''" @click='removeVal()')
-      i(class="icon icon-dropDown" :class="{'is-reverse':!showOptions}")
-      div(class='showBox' v-if="type !=='multiple'")
+      i(class="icon icon-close" v-if="clearable && type !== 'tips' && type !== 'multiple' && selectedVal !== ''" @click='removeVal()')
+      i(class="icon icon-dropDown" :class="{'is-reverse':!showOptions}" v-if="type !== 'tips'")
+      i(class="icon icon-question-fill" v-if="type === 'tips'")
+      div(class='showBox showBox1' v-if="type !=='multiple'")
         ul(v-if="showOptions")
-          li(v-for="items in options" @click='selectOptions(items)' :class="{'selected': selectedVal===items.name}") {{items.name}}
-      div(class='showBox' v-if="type==='multiple'")
+          li(v-for="items in options" @click='selectOptions(items)' :class="{'selected': selectedVal === items.name}") {{items.name}}
+      div(class='showBox showBox2' v-if="type==='multiple'")
         ul(v-if="showOptions")
           li(v-for="items in options" @click="selectMulOption(items)" :class="{'selected': selectArr.indexOf(items.name) !== -1}") {{items.name}}
 </template>
@@ -41,9 +42,17 @@
     },
     data () {
       return {
+        tempOption: [],
         showOptions: false,
         selectedVal: '',
         selectArr: []
+      }
+    },
+    created () {
+      if (this.options) {
+//        for (let i in this.options) {
+//          this.tempOption[i] = this.option[i]
+//        }
       }
     },
     computed: {
@@ -152,7 +161,12 @@
           line-height 40px
           cursor pointer
           text-align center
-    i.icon-close
+        li:hover
+          background #ededed
+        li.selected
+          background #ffd600
+          border none
+    i.icon-close,.icon-question-fill
       position absolute
       right 8px
       top 50%
@@ -161,6 +175,7 @@
       line-height 36px
       color  #bababa
       cursor pointer
+    i.icon-close
       display none
     i.icon-dropDown
       position absolute
@@ -181,27 +196,24 @@
       display block
     i.icon-close + i
       display none
-  .mp-select--primary
-    ul
-      li:hover
-        background #ededed
-      li.selected
-        background #ffd600
-        border none
-  .mp-select--radio
+  .mp-select.mp-select--radio
     ul
       width 600px
       li
         position relative
       li::before
-           content ''
-           width 16px
-           height 16px
-           position absolute
-           left 20px
-           top 10px
-           border-radius 24px
-           border 2px solid #ededed
+         content ''
+         width 16px
+         height 16px
+         position absolute
+         left 20px
+         top 10px
+         border-radius 24px
+         border 2px solid #ededed
+      li.selected
+          background none
+      li:hover
+          background none
       li.selected::after
         content ''
         width 2px
@@ -216,7 +228,7 @@
         border-color #ffd600
       li:hover::before
         border-color #ffd600
-  .mp-select--multiple
+  .mp-select.mp-select--multiple
     width 300px
     height auto
     min-height 36px
@@ -228,12 +240,12 @@
         padding-left 5px
         li
           float left
-          height 28px
-          line-height 28px
+          height 26px
+          line-height 26px
           display inline-block
           border 1px solid #ededed
           color #888888
-          margin 3px 0
+          margin 5px 0
           margin-right 5px
           padding 0 5px
           border-radius 2px
@@ -260,7 +272,7 @@
           width auto
           display inline-block
           line-height 40px
-          margin 3px 0
+          margin 5px 0
           margin-right 5px
           padding 0 5px
           cursor pointer

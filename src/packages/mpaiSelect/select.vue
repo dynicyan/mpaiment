@@ -1,8 +1,8 @@
 <template lang="pug">
 div.box(@click="showOptions = false")
   div(class='mp-select' :class="[type ? 'mp-select--' + type : '', {'hover': showOptions}]")
-    div.selectedBox
-      ul.multiSelected(v-if="(type==='multiple') && selectArr.length > 0")
+    div.mp-selectedBox
+      ul(v-if="(type === 'multiple') && selectArr.length > 0")
         li(v-for="(item,index) in selectArr")
           | {{item}}
           i.icon.icon-roundclose-fill(@click="removeOption(index)")
@@ -11,6 +11,8 @@ div.box(@click="showOptions = false")
     i(class="icon icon-dropDown" :class="{'is-reverse':!showOptions}")
 </template>
 <script>
+// import Vue from 'vue'
+// var eventBus = new Vue({})
 export default {
   props: {
     type: {
@@ -30,6 +32,8 @@ export default {
       default: ''
     }
   },
+  created () {
+  },
   data () {
     return {
       showOptions: false,
@@ -48,7 +52,9 @@ export default {
   },
   methods: {
     handleClick (evt) {
-      this.$emit('select', evt)
+      this.showOptions = true
+      console.log(2)
+     // eventBus.$emit('handleClick', this.showOptions)
     },
     addEdit () {
       if (this.type === 'multiple') {
@@ -111,7 +117,7 @@ export default {
         width 135px
         position relative
         margin auto
-        div.selectedBox
+        div.mp-selectedBox
             border-radius 2px
             background-color #ffffff
             border solid 1px #e1e1e1
@@ -212,7 +218,7 @@ export default {
         height auto
         min-height 36px
         position relative
-        .selectedBox
+        .mp-selectedBox
             ul
                 float left
                 overflow hidden

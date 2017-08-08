@@ -4,11 +4,11 @@
     .showList
       p 一般选择器
       mp-select(type="primary" @change='change' :val='value1')
-      mp-option(v-for="option in options" :key='option.key' :val='option.value')
+        mp-option(v-for="option in options" :key='option.key' :val='option.value')
     .showList
       p 可清除选择器
       mp-select(type="primary" clearable @change='change' :val='value2')
-      mp-option(v-for="option in options" :key='option.key' :val='option.value')
+        mp-option(v-for="option in options" :key='option.key' :val='option.value')
     .showList
       p radio单选按钮选择器
       mp-select(type="radio" @change='change' :val='value3')

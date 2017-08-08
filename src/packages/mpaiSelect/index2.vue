@@ -8,6 +8,9 @@
       p 可清除选择器
       mp-select(type="primary" :options='options' clearable @change='change')
     .showList
+      p 提示文字选择器
+      mp-select(type="tips" :options='options' clearable @change='change')
+    .showList
       p radio单选按钮选择器
       mp-select(type="radio" :options='options' clearable @change='change')
     .showList
@@ -55,7 +58,7 @@
 <style lang="stylus">
   .selectBox
     .showList
-      height 100px
+      height auto
       p
         height 36px
         line-height 36px

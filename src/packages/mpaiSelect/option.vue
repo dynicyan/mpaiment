@@ -1,8 +1,10 @@
 <template lang="pug">
-  div.optionBox(v-if="type !== 'multiple' && showOptions")
+  div.optionBox(v-if="type !== 'multiple'")
     li(@click='selectOptions(items)' :class="{'selected': itemSelected}") {{val}}
 </template>
 <script>
+//  import Vue from 'vue'
+//  var eventBus = new Vue({})
   export default {
     props: {
       type: {
@@ -19,7 +21,16 @@
       }
     },
     created () {
+      console.log(0)
       console.log(this.parent)
+    },
+    mounted: function () {
+      console.log(1)
+//      let that = this
+//      eventBus.$on('handleClick', function (val) {
+//        that.showOptions = val
+//      })
+      console.log(this.showOptions)
     },
     data () {
       return {
