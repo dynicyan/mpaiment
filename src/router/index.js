@@ -34,32 +34,37 @@ export default new Router({
         {
           path: '/mpinput',
           name: 'mpinput',
-          component: r => require.ensure([], () => r(require('../packages/mpaiInput/Index')), 'mpaiment-button')
+          component: r => require.ensure([], () => r(require('../packages/mpaiInput/Index')), 'mpaiment-input')
         },
         {
           path: '/mpselect',
           name: 'mpselect',
-          component: r => require.ensure([], () => r(require('../packages/mpaiSelect/Index')), 'mpaiment-button')
+          component: r => require.ensure([], () => r(require('../packages/mpaiSelect/Index')), 'mpaiment-select')
         },
         {
           path: '/mpcheck',
           name: 'mpcheck',
-          component: r => require.ensure([], () => r(require('../packages/mpaiCheck/Index')), 'mpaiment-button')
+          component: r => require.ensure([], () => r(require('../packages/mpaiCheck/Index')), 'mpaiment-check')
         },
         {
           path: '/mphistory',
           name: 'mphistory',
-          component: r => require.ensure([], () => r(require('../packages/mpaiHistory/Index')), 'mpaiment-button')
+          component: r => require.ensure([], () => r(require('../packages/mpaiHistory/Index')), 'mpaiment-history')
         },
         {
           path: '/mpage',
           name: 'mpage',
-          component: r => require.ensure([], () => r(require('../packages/mpaiPage/Index')), 'mpaiment-button')
+          component: r => require.ensure([], () => r(require('../packages/mpaiPage/Index')), 'mpaiment-page')
         },
         {
           path: '/mpnodata',
           name: 'mnodata',
-          component: r => require.ensure([], () => r(require('../packages/mpaiNodata/Index')), 'mpaiment-button')
+          component: r => require.ensure([], () => r(require('../packages/mpaiNodata/Index')), 'mpaiment-nodata')
+        },
+        {
+          path: '/mpUpload',
+          name: 'mpUpload',
+          component: r => require.ensure([], () => r(require('../packages/mpaiUpload/index')), 'mpaiment-upload')
         }
       ]
     }

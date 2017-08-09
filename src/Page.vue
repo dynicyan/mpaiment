@@ -4,7 +4,7 @@
     ul
       li(v-for='(list, index) in textLists')
         router-link(:to='list.link') {{list.name}}
-    router-view
+      router-view
 </template>
 
 <script>
@@ -44,7 +44,7 @@ export default {
         },
         {
           name: '视频上传',
-          link: '/mpupfile'
+          link: '/mpUpload'
         }]
     }
   }

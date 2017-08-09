@@ -60,14 +60,14 @@ export default {
   overflow hidden
   width 960px
   margin 0 auto
-button
-  margin 10px 20px
 .type-btn
   float left
   width 100%
   text-align left
   overflow hidden
   margin-bottom 10px
+  button
+    margin 10px
   p
     line-height 20px
     margin 20px auto

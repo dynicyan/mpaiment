@@ -27,12 +27,13 @@ export default {
       msg: 'mPaiMentInput输入框最近10条本地浏览历史记录',
       textLists: {},
       curValue: '',
-      showHistory: false,
+      showHistory: true,
       historyItems: [],
       localHistory: []
     }
   },
   created () {
+    this.showHistory = true
     this.localHistory = localStorage.getItem('History') ? localStorage.getItem('History').split(',').slice(0, 10) : []
     this.historyItems = this.localHistory
   },

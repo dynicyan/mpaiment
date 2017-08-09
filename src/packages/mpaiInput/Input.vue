@@ -7,13 +7,13 @@
 			span(:class="[{'is-top': isTop}]" v-if='$slots.before && !labeled' class='mp-input-group_before')
 				slot(name='before')
 				em.error-msg(v-if='errorShow') {{errorMsg}}
-			i(:class="['icon-' + icon, onIconClick ? 'is-clickable' : '']" v-if='icon' class='icon' @click="handleIconClick" ref='input')
+			i(:class="['icon-' + icon, onIconClick ? 'is-clickable' : '']" v-if='icon && isShowIcon' class='icon' @click="handleIconClick" ref='input')
 			input(
 			:class="[{'error-vaild': errorShow}]"
 			:value='currentValue'
-			:autocomplete="autoComplete" 
-			@keyup.enter="handleIconClick" 
-			class='mp-inner--input' 
+			:autocomplete="autoComplete"
+			@keyup.enter="handleIconClick"
+			class='mp-inner--input'
 			v-bind="$props"
 			ref="Input"
 			@focus='handleFocus'
@@ -68,6 +68,10 @@ export default {
     errorShow: Boolean,
     valided: Boolean,
     validateEvent: {
+      type: Boolean,
+      default: true
+    },
+    isShowIcon: {
       type: Boolean,
       default: true
     },
@@ -224,7 +228,7 @@ export default {
 	text-shadow 0px 0px 0px #23232b
 	-webkit-text-fill-color transparent
 	&::-webkit-outer-spin-button,
-	&::-webkit-inner-spin-button 
+	&::-webkit-inner-spin-button
 		-webkit-appearance none
 	&:hover
 		border-color #bababa

@@ -60,6 +60,7 @@ export default {
     height 20px
     border-radius 20px
     vertical-align middle
+    cursor pointer
     &:hover
       .mp-switch--inner
         background-color #c8c8c8

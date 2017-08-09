@@ -1,7 +1,7 @@
 <template lang="pug">
   button(
     :class="[type ? 'mp-button--' + type : '', size ? 'mp-button--' + size : '', {'is-disabled': disabled, 'is-loading': loading, 'is-plain': plain, 'is-dashed': dashed, 'is-circle': circled}]"
-    :disabled = 'disabled' 
+    :disabled = 'disabled'
     class='mp-button'
     @click="handleClick"
     :autofocus="autofocus"
@@ -33,8 +33,8 @@ export default {
     disabled: Boolean
   },
   methods: {
-    handleClick (evt) {
-      this.$emit('click', evt)
+    handleClick () {
+      this.$emit('click')
     }
   }
 }
