@@ -42,6 +42,11 @@ export default new Router({
           component: r => require.ensure([], () => r(require('../packages/mpaiSelect/Index')), 'mpaiment-select')
         },
         {
+          path: '/mpselect2',
+          name: 'mpselect2',
+          component: r => require.ensure([], () => r(require('../packages/mpaiSelect/Index2')), 'mpaiment-button')
+        },
+        {
           path: '/mpcheck',
           name: 'mpcheck',
           component: r => require.ensure([], () => r(require('../packages/mpaiCheck/Index')), 'mpaiment-check')
