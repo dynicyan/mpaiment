@@ -45,6 +45,10 @@ export default {
         {
           name: '视频上传',
           link: '/mpUpload'
+        },
+        {
+          name: '移动端',
+          link: '/mpMobile'
         }]
     }
   }

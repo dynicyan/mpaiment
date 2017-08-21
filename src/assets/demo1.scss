@@ -1,0 +1,6 @@
+$rem-base: 27;// or 720
+$Response:true;
+@import "_function/_mobile-mixin";
+body {
+  margin: 0 auto
+}

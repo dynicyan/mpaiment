@@ -70,6 +70,11 @@ export default new Router({
           path: '/mpUpload',
           name: 'mpUpload',
           component: r => require.ensure([], () => r(require('../packages/mpaiUpload/index')), 'mpaiment-upload')
+        },
+        {
+          path: '/mpMobile',
+          name: 'mpMobile',
+          component: r => require.ensure([], () => r(require('../packages/mpMobile/Index')), 'mpaiment-mobile')
         }
       ]
     }

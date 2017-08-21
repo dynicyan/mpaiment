@@ -4,16 +4,16 @@
     .mp-page
       .pagewrapper
         mp-pagination(:mPpagination="mpPagination" @curChange='changePage')
-      p 当前页现实记录为 {{mpPagination.pageSize}} 条/页,  当前选中为第 {{mpPagination.currentPage}} 页
+      p 当前页显示记录为 {{mpPagination.pageSize}} 条/页,  当前选中为第 {{mpPagination.currentPage}} 页
       .pagewrapper
         mp-pagination(:mPpagination="mpPagination1" @curChange='changePage1')
-      p 当前页现实记录为 {{mpPagination1.pageSize}} 条/页,  当前选中为第 {{mpPagination1.currentPage}} 页
+      p 当前页显示记录为 {{mpPagination1.pageSize}} 条/页,  当前选中为第 {{mpPagination1.currentPage}} 页
       .pagewrapper
         mp-pagination(:mPpagination="mpPagination2" @curChange='changePage2')
-      p 当前页现实记录为 {{mpPagination2.pageSize}} 条/页,  当前选中为第 {{mpPagination2.currentPage}} 页
+      p 当前页显示记录为 {{mpPagination2.pageSize}} 条/页,  当前选中为第 {{mpPagination2.currentPage}} 页
       .pagewrapper
         mp-pagination(:mPpagination="mpPagination3" @curChange='changePage3')
-      p 当前页现实记录为 {{mpPagination3.pageSize}} 条/页,  当前选中为第 {{mpPagination3.currentPage}} 页
+      p 当前页显示记录为 {{mpPagination3.pageSize}} 条/页,  当前选中为第 {{mpPagination3.currentPage}} 页
 </template>
 
 <script>
